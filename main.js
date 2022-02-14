@@ -37,8 +37,6 @@ let special = {
         { name: "Miners", cost: 350, image: "", bought: 0 }
 }
 
-/// NEED TO MAKE STATS TABLE INDICATING HOW MUCH ORE PER CLICK AND PER SECOND
-// ADD MINER AND ENRICHED ORE FUNCTIONALITY
 // STYLE IT UP
 // ADD CURRENCY FUNCTIONALITY TO THINGS THAT REQUIRE DIFFERENT CURRENCY
 
@@ -71,9 +69,6 @@ function buyUpgrade(name) {
         }
     }
 }
-
-
-// THIS DOESNT BUY MINERS
 
 function buySpecial(name) {
     for (key in special) {
@@ -229,9 +224,9 @@ function drawStatsAgain() {
     document.getElementById("stats-two").innerHTML = templateTwo
 
 }
+
+
 drawStats()
-
-
 drawUpgrades()
 drawTotals()
 drawSpecialShop()
