@@ -53,18 +53,19 @@ function buyUpgrade(name) {
     for (key in upgrades) {
         if (upgrades[key].name == name) {
             if (name == "Upgrade Ore Smelters") {
-                if (special.oreSmelter.bought == 0)
+                if (special.oreSmelter.bought == 0) {
                     console.log("You have not bought any Ore Smelters yet");
-            } else {
-                if (upgrades[key].cost <= totals['ore'].current) {
-                    totals['ore'].current = totals['ore'].current -= upgrades[key].cost
-                    upgrades[key].level++
-                    upgrades[key].cost = (upgrades[key].baseCost * upgrades[key].level)
-                    drawTotals()
-                    drawUpgrades()
-                }
-                else {
-                    console.log("Not enough Ore");
+                } else {
+                    if (upgrades[key].cost <= totals['ore'].current) {
+                        totals['ore'].current = totals['ore'].current -= upgrades[key].cost
+                        upgrades[key].level++
+                        upgrades[key].cost = (upgrades[key].baseCost * upgrades[key].level)
+                        drawTotals()
+                        drawUpgrades()
+                    }
+                    else {
+                        console.log("Not enough Ore");
+                    }
                 }
             }
         }
@@ -224,7 +225,7 @@ function drawStats() {
 
 function drawStatsAgain() {
     let templateTwo = "<tr><th>Miners:</th></tr>"
-    templateTwo += `<tr<td>Miner's Power: ${upgrades.unionizeMiners.level * special.miners.bought}</td></tr>`
+    templateTwo += `<tr<td>Miner's Power: ${upgrades.unionizeMiners.level * special.miners.bought * upgrades.enrichOreVeins.level}</td></tr>`
     document.getElementById("stats-two").innerHTML = templateTwo
 
 }
