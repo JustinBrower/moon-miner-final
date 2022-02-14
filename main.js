@@ -37,28 +37,16 @@ let special = {
         { name: "Miners", cost: 350, image: "", bought: 0 }
 }
 
-let minePower = upgrades.reinforcePick.level // This doesn't update with pick level
-let minerPower = special.miners.level
-let veinPower = upgrades.enrichOreVeins.level
-
-
 /// NEED TO MAKE STATS TABLE INDICATING HOW MUCH ORE PER CLICK AND PER SECOND
-// PROBABLY SHOULD MAKE THE SHOP ITEMS BUTTONS
 // ADD MINER AND ENRICHED ORE FUNCTIONALITY
 // STYLE IT UP
 // ADD CURRENCY FUNCTIONALITY TO THINGS THAT REQUIRE DIFFERENT CURRENCY
 
-
-
-// !!!!
-// // DO NOT FORGET YOUR JOURNALS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!
-
-
 function mineClick() {
-    totals['ore'].current = totals['ore'].current += (minePower * veinPower)
-    totals['ore'].total = totals['ore'].total += (minePower * veinPower)
+    totals['ore'].current = totals['ore'].current += (upgrades.reinforcePick.level * upgrades.enrichOreVeins.level)
+    totals['ore'].total = totals['ore'].total += (upgrades.reinforcePick.level * upgrades.enrichOreVeins.level)
     drawTotals()
+    drawStats()
 }
 
 function buyUpgrade(name) {
@@ -91,42 +79,50 @@ function buySpecial(name) {
         if (special[key].name == name) {
             if (special[key].cost <= totals['ore'].current) {
                 totals['ore'].current = (totals['ore'].current -= special[key].cost)
-                special[key].bought++
+                if (special[key].name == "Miners") {
+                    buyMiner()
+                } else {
+                    special[key].bought++
+                }
                 if (name == "Ore Smelter") {
                     document.getElementById("smelter-h").classList.remove("hidden")
                 }
             } else {
-                console.log("Not enough Ore");
+                console.log("Not enough Funds");
             }
         }
     }
+    drawStats()
     drawSpecialShop()
     drawTotals()
     drawUpgrades()
 }
 
 function minersWork() {
-    let workDone = (special.miners.bought * upgrades.unionizeMiners.level)
+    let workDone = (special.miners.bought * upgrades.unionizeMiners.level * upgrades.enrichOreVeins.level)
     totals.ore.current += workDone
     totals.ore.total += workDone
     console.log(totals.ore.current);
     drawSpecialShop()
     drawTotals()
     drawUpgrades
+    drawStats()
 }
 
 
 function buyMiner() {
-    if (totals.iron.current >= special.miners.cost) {
-        totals.iron.current = (totals.iron.current -= special.miners.cost)
+    if (totals.ore.current >= special.miners.cost) {
+        totals.ore.current = (totals.ore.current -= special.miners.cost)
         if (special.miners.bought == 0) {
             setInterval(minersWork, 3000)
         }
+        special.miners.bought++
         drawSpecialShop()
         drawTotals()
         drawUpgrades()
+        drawStats()
     } else {
-        console.log("You don't have enough Iron");
+        console.log("Not enough Funds");
     }
 }
 
@@ -184,6 +180,7 @@ function drawTotals() {
             document.getElementById("totals-ct-table").innerHTML = templateTwo
         }
     }
+    drawStats()
 }
 
 function drawSpecialShop() {
@@ -199,12 +196,13 @@ function drawUpgrades() {
     for (let key in upgrades) {
         template += `<tr id="${upgrades[key].name}" class="btn btn-outline-success w-100" onclick="buyUpgrade('${upgrades[key].name}')"><td>${upgrades[key].name}: ${upgrades[key].cost} Ore -- Level: ${upgrades[key].level}</td></tr>`
         document.getElementById("upgrades-table").innerHTML = template
+        drawStats()
     }
 }
 
 function cheatMoney() {
-    totals['ore'].current = totals['ore'].current += 500000
-    totals['ore'].total = totals['ore'].total += 500000
+    totals['ore'].current = totals['ore'].current += 1000
+    totals['ore'].total = totals['ore'].total += 1000
     drawUpgrades()
     drawTotals()
 }
@@ -217,6 +215,20 @@ function cheatSmelter() {
     drawSpecialShop()
 }
 
+function drawStats() {
+    let template = "<tr><th>Pick:</th></tr>"
+    template += `<tr<td>Pickaxe Power: ${upgrades.enrichOreVeins.level * upgrades.reinforcePick.level}</td></tr>`
+    document.getElementById("stats").innerHTML = template
+    drawStatsAgain()
+}
+
+function drawStatsAgain() {
+    let templateTwo = "<tr><th>Miners:</th></tr>"
+    templateTwo += `<tr<td>Miner's Power: ${upgrades.unionizeMiners.level * special.miners.bought}</td></tr>`
+    document.getElementById("stats-two").innerHTML = templateTwo
+
+}
+drawStats()
 
 
 drawUpgrades()
