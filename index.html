@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>Just Mine</title>
+    <style>
+        body.debug .container,
+        body.debug .container-fluid {
+            outline: 2px double blue;
+            outline-offset: -2px;
+        }
+
+        body.debug .row {
+            outline: 2px dashed red;
+            outline-offset: -2px;
+        }
+
+        body.debug [class*="col-"] {
+            outline: 2px dotted forestgreen;
+            outline-offset: -3px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container-fluid bg-info">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <h1>Just Mine</h1>
+            </div>
+        </div>
+    </header>
+    <main class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <div class="row justify-content-center">
+                    <table style="width: 100%;" border="2" cellpadding="5">
+                        <tbody id="totals-lt-table">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="row justify-content-center">
+                    <table style="width: 100%;" border="2" cellpadding="5">
+                        <tbody id="totals-ct-table">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="row justify-content-center mt-3">
+                    <table style="width: 100%;" border="2" cellpadding="5">
+                        <tbody id="special-table">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row justify-content-center p-0">
+                <div class="col-4"></div>
+                <div class="col-4 rock-style" onclick="mineClick()">🥌</div>
+                <div class="col-4">
+                    <div class="row justify-content-center p-0">
+                        <table style="width: 100%;" border="2" cellpadding="10">
+                            <tbody id="upgrades-table">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <button class="btn btn-outline-warning" onclick="cheatMoney()">Cheat Ore
+                        +50000</button>
+                    <button class="btn btn-outline-warning" onclick="cheatSmelter()">Cheat Level
+                        5000</button>
+                </div>
+                <div class="col-4">
+                </div>
+                <div id="smelter-h" class="col-4 hidden">
+                    <button id="smelter" class="btn btn-outline-info" onclick="smeltOre()">Smelt Ore</button>
+                </div>
+            </div>
+
+
+    </main>
+    <footer>
+
+    </footer>
+
+
+
+    <script src="main.js"></script>
+</body>
+
+</html>
